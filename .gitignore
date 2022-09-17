@@ -8,3 +8,4 @@ node_modules
 output
 .direnv
 .spago
+.psc-ide-port
