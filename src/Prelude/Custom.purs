@@ -8,6 +8,10 @@ module Custom.Prelude
   , unlines
   , (|>)
   , (<|)
+  , mapmap
+  , (<<$>>)
+  , mapmapFlipped
+  , (<<#>>)
   ) where
 
 import Prelude
@@ -37,3 +41,13 @@ unlines = String.joinWith "\n"
 infixr 0 Function.apply as <|
 
 infixl 1 Function.applyFlipped as |>
+
+mapmap ∷ ∀ f g a b. Functor f ⇒ Functor g ⇒ (a → b) → f (g a) → f (g b)
+mapmap = map <<< map
+
+infixl 4 mapmap as <<$>>
+
+mapmapFlipped ∷ ∀ f g a b. Functor f ⇒ Functor g ⇒ f (g a) → (a → b) → f (g b)
+mapmapFlipped = flip mapmap
+
+infixl 1 mapmapFlipped as <<#>>
