@@ -5,6 +5,7 @@ module Custom.Prelude
   , module Debug
   , module Tuple
   , module NTuple
+  , guarded
   , pass
   , unwords
   , unlines
@@ -18,6 +19,8 @@ module Custom.Prelude
 
 import Prelude
 
+import Control.Alternative (class Alternative)
+import Control.Plus (empty)
 import Data.Either (Either(..), either, hush, note)
 import Data.Function as Function
 import Data.Maybe (Maybe(..), fromMaybe, maybe)
@@ -49,3 +52,8 @@ mapmapFlipped
 mapmapFlipped f a = mapmap a f
 
 infixl 1 mapmapFlipped as <<#>>
+
+guarded ∷ ∀ a f. Alternative f ⇒ (a → Boolean) → a → f a
+guarded p a
+  | p a = pure a
+  | otherwise = empty
