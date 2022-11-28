@@ -15,6 +15,9 @@ module Custom.Prelude
   , (<<$>>)
   , mapmapFlipped
   , (<<#>>)
+  , class NotImplemented
+  , todo
+  , notImplemented
   ) where
 
 import Prelude
@@ -28,6 +31,8 @@ import Data.String as String
 import Data.Tuple (Tuple(..), curry, fst, snd, swap, uncurry) as Tuple
 import Data.Tuple.Nested (type (/\), (/\)) as NTuple
 import Debug (class DebugWarning, spy, spyWith, trace, traceM, traceTime)
+import Partial.Unsafe (unsafeCrashWith)
+import Prim.TypeError (class Warn, Text)
 
 pass ∷ ∀ f. Applicative f ⇒ f Unit
 pass = pure unit
@@ -57,3 +62,13 @@ guarded ∷ ∀ a f. Alternative f ⇒ (a → Boolean) → a → f a
 guarded p a
   | p a = pure a
   | otherwise = empty
+
+class NotImplemented
+
+instance warn ∷ Warn (Text "Not Implemented") ⇒ NotImplemented
+
+todo ∷ NotImplemented ⇒ ∀ a. a
+todo = unsafeCrashWith "TODO: implement"
+
+notImplemented ∷ NotImplemented ⇒ ∀ a. a
+notImplemented = todo
