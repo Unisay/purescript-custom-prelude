@@ -3,7 +3,7 @@
 
   inputs = {
     flake-compat.flake = false;
-    flake-compat.url = github:edolstra/flake-compat;
+    flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     easy-purescript-nix = {
@@ -17,20 +17,19 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         epkgs = import easy-purescript-nix { inherit pkgs; };
-      in
-      {
-        devShell =
-          pkgs.mkShell {
-            buildInputs = [
-              pkgs.dhall
-              pkgs.nixfmt
-              # pkgs.nodejs-16_x
-              pkgs.purescript
-              epkgs.purs-tidy
-              epkgs.spago
-              epkgs.zephyr
-            ];
-          };
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = [
+            pkgs.dhall
+            pkgs.dhall-lsp-server
+            pkgs.nixfmt
+            # pkgs.nodejs-19_x
+            pkgs.purescript
+            epkgs.purs-tidy
+            epkgs.spago
+            epkgs.zephyr
+          ];
+        };
       });
 }
 
