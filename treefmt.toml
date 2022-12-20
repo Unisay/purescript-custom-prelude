@@ -1,0 +1,14 @@
+[formatter.nixfmt]
+command = "nixfmt"
+options = ["--width=80"]
+includes = ["*.nix"]
+
+[formatter.purescript]
+command = "purs-tidy"
+options = ["format-in-place"]
+includes = ["*.purs"]
+
+[formatter.dhall]
+command = "dhall"
+options = ["format"]
+includes = ["*.dhall"]

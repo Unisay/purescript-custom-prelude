@@ -16,18 +16,19 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        epkgs = import easy-purescript-nix { inherit pkgs; };
+        eps = import easy-purescript-nix { inherit pkgs; };
       in {
         devShell = pkgs.mkShell {
-          buildInputs = [
-            pkgs.dhall
-            pkgs.dhall-lsp-server
-            pkgs.nixfmt
-            # pkgs.nodejs-19_x
-            pkgs.purescript
-            epkgs.purs-tidy
-            epkgs.spago
-            epkgs.zephyr
+          buildInputs = with pkgs; [
+            dhall
+            dhall-lsp-server
+            nixfmt
+            # nodejs-19_x
+            purescript
+            eps.purs-tidy
+            eps.spago
+            eps.zephyr
+            treefmt
           ];
         };
       });
