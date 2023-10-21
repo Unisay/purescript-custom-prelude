@@ -21,13 +21,11 @@
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             dhall
-            dhall-lsp-server
             nixfmt
             # nodejs-19_x
             purescript
             eps.purs-tidy
             eps.spago
-            eps.zephyr
             treefmt
           ];
         };
